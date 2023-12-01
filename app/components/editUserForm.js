@@ -20,7 +20,7 @@ export default function EditUserForm({ user }) {
         e.preventDefault();
 
         try {
-            const res = await fetch(`http://localhost:3000/api/users/${user._id}`, {
+            const res = await fetch(process.env.hostURL + `/api/users/${user._id}`, {
                 method: "PUT",
                 headers: {
                     "Content-type": "application/json",
