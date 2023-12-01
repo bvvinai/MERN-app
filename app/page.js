@@ -2,14 +2,14 @@ import { Button } from "@mui/base";
 import Link from "next/link";
 import UserList from "./components/userList";
 import jsonToDb from "@/libs/jsonToDb";
-import User from "@/models/user";
-import connectMongoDB from "@/libs/mongodb";
 
 const getUsers = async () => {
   try {
-    await connectMongoDB();
-    const users = await User.find();
-    return users;
+    const res = await fetch(process.env.hostURL + '/api/users', { cache: "no-store", });
+    if (!res.ok) {
+      throw new Error("Failed to fetch user");
+    }
+    return res.json();
   } catch (error) {
     console.log(error);
   }
