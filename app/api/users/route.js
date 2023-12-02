@@ -15,3 +15,9 @@ export async function GET() {
     const users = await User.find();
     return NextResponse.json({ users });
 }
+
+export async function getUsers() {
+    await connectMongoDB();
+    const users = await User.find();
+    return JSON.parse(JSON.stringify(users));
+}
