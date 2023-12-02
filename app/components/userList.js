@@ -25,6 +25,7 @@ export default function UserList() {
     }
 
     useEffect(() => {
+        clearState();
         fetch('/api/users')
             .then((res) => res.json())
             .then((data) => {
@@ -32,6 +33,16 @@ export default function UserList() {
                 setUsers(data.users)
             })
     }, []);
+
+    const getdata = () => {
+        clearState();
+        fetch('/api/users')
+            .then((res) => res.json())
+            .then((data) => {
+                setUserList(data.users)
+                setUsers(data.users)
+            })
+    }
 
     useEffect(() => {
         setUsers(
@@ -142,7 +153,7 @@ export default function UserList() {
                         </CardContent>
                         <CardActions>
                             <Button><Link href={`/editUser/${u._id}`}><HiPencilAlt size={26} /></Link></Button>
-                            <RemoveUser id={u._id} />
+                            <RemoveUser id={u._id} getud={getdata} />
                         </CardActions>
                     </Card >
                 ))

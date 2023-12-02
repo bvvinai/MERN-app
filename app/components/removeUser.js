@@ -4,7 +4,7 @@ import { HiOutlineTrash } from "react-icons/hi";
 import { useRouter } from "next/navigation";
 import { Button } from "@mui/material";
 
-export default function RemoveUser({ id }) {
+export default function RemoveUser({ id, getud }) {
     const router = useRouter();
     const removeUser = async () => {
         const confirmed = confirm("Are you sure?");
@@ -14,7 +14,7 @@ export default function RemoveUser({ id }) {
             });
 
             if (res.ok) {
-                router.refresh();
+                getud();
             }
         }
     };
