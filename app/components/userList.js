@@ -1,5 +1,5 @@
 "use client";
-import { Button, Card, CardActions, CardContent, Checkbox, Input, InputLabel, Pagination, Radio, TablePagination, Typography, darkScrollbar, duration } from "@mui/material";
+import { Button, Card, CardActions, CardContent, Checkbox, CircularProgress, Input, InputLabel, Pagination, Radio, TablePagination, Typography, darkScrollbar, duration } from "@mui/material";
 import Link from "next/link";
 import { HiEye, HiOutlineEye, HiOutlineTrash, HiPencilAlt } from "react-icons/hi";
 import RemoveUser from "./removeUser";
@@ -10,6 +10,7 @@ export default function UserList() {
     //const userlist = await getUsers();
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(20);
+    const [loading, setLoading] = useState(true);
     const [userlist, setUserList] = useState([]);
     const [users, setUsers] = useState([]);
     const [name, setName] = useState("");
@@ -29,8 +30,9 @@ export default function UserList() {
         fetch('/api/users')
             .then((res) => res.json())
             .then((data) => {
-                setUserList(data.users)
-                setUsers(data.users)
+                setUserList(data.users);
+                setUsers(data.users);
+                setLoading(false);
             })
     }, []);
 
@@ -39,8 +41,9 @@ export default function UserList() {
         fetch('/api/users')
             .then((res) => res.json())
             .then((data) => {
-                setUserList(data.users)
-                setUsers(data.users)
+                setUserList(data.users);
+                setUsers(data.users);
+                setLoading(false);
             })
     }
 
@@ -131,34 +134,36 @@ export default function UserList() {
 
             <TablePagination component={'div'} rowsPerPageOptions={[10, 20, 50, 100]} rowsPerPage={rowsPerPage} onRowsPerPageChange={handleChangeRowsPerPage} className="my-5" count={users.length} page={page} onPageChange={changePage} />
 
-            <div className="flex flex-col-reverse w-full">
-                {users.slice((page) * rowsPerPage, Math.min(users.length, ((page + 1) * rowsPerPage))).map((u) => (
-                    <Card key={u._id} sx={{ display: 'flex', margin: '10px' }}>
-                        <CardContent className="mr-auto">
-                            <Typography variant="h5" component="div">
-                                {u.first_name} {u.last_name}
-                            </Typography>
-                            <Typography variant="body2" component="div">
-                                {u.gender}
-                            </Typography>
-                            <Typography variant="body2" component="div">
-                                {u.email}
-                            </Typography>
-                            <Typography variant="body2" component="div">
-                                {u.domain}
-                            </Typography>
-                            <Typography variant="body2">
-                                {u.available ? "Avaiable" : "Not Available"}
-                            </Typography>
-                        </CardContent>
-                        <CardActions>
-                            <Button><Link href={`/editUser/${u._id}`}><HiPencilAlt size={26} /></Link></Button>
-                            <RemoveUser id={u._id} getud={getdata} />
-                        </CardActions>
-                    </Card >
-                ))
-                }
-            </div>
+            {loading ? <CircularProgress color="success" /> :
+                <div className="flex flex-col-reverse w-full">
+                    {users.slice((page) * rowsPerPage, Math.min(users.length, ((page + 1) * rowsPerPage))).map((u) => (
+                        <Card key={u._id} sx={{ display: 'flex', margin: '10px' }}>
+                            <CardContent className="mr-auto">
+                                <Typography variant="h5" component="div">
+                                    {u.first_name} {u.last_name}
+                                </Typography>
+                                <Typography variant="body2" component="div">
+                                    {u.gender}
+                                </Typography>
+                                <Typography variant="body2" component="div">
+                                    {u.email}
+                                </Typography>
+                                <Typography variant="body2" component="div">
+                                    {u.domain}
+                                </Typography>
+                                <Typography variant="body2">
+                                    {u.available ? "Avaiable" : "Not Available"}
+                                </Typography>
+                            </CardContent>
+                            <CardActions>
+                                <Button><Link href={`/editUser/${u._id}`}><HiPencilAlt size={26} /></Link></Button>
+                                <RemoveUser id={u._id} getud={getdata} />
+                            </CardActions>
+                        </Card >
+                    ))
+                    }
+                </div>
+            }
             <TablePagination component={'div'} rowsPerPageOptions={[10, 20, 50, 100]} rowsPerPage={rowsPerPage} onRowsPerPageChange={handleChangeRowsPerPage} className="my-5" count={users.length} page={page} onPageChange={changePage} />
         </div>
     );
