@@ -23,3 +23,9 @@ export async function DELETE(request, { params }) {
     await User.findByIdAndDelete(id);
     return NextResponse.json({ message: "User deleted" }, { status: 200 });
 }
+
+export async function getUserById(id) {
+    await connectMongoDB();
+    const user = await User.findOne({ _id: id });
+    return JSON.parse(JSON.stringify(user));
+}

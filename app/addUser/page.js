@@ -24,7 +24,7 @@ export default function AddUser() {
         }
 
         try {
-            const res = await fetch(process.env.hostURL + '/api/users', {
+            const res = await fetch('/api/users', {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",
@@ -35,7 +35,7 @@ export default function AddUser() {
                 router.push('/');
             }
             else {
-                throw new Error("User Creation Failed");
+                throw new Error(res.json());
             }
         } catch (error) { console.log(error); }
     }
