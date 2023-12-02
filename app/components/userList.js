@@ -4,17 +4,14 @@ import Link from "next/link";
 import { HiEye, HiOutlineEye, HiOutlineTrash, HiPencilAlt } from "react-icons/hi";
 import RemoveUser from "./removeUser";
 import { useEffect, useState } from "react";
-import dynamic from 'next/dynamic';
 
-export default dynamic(() => Promise.resolve(UserList), {
-    ssr: false
-})
+export default function UserList() {
 
-function UserList({ userlist }) {
-
+    //const userlist = await getUsers();
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(20);
-    const [users, setUsers] = useState(userlist);
+    const [userlist, setUserList] = useState([]);
+    const [users, setUsers] = useState([]);
     const [name, setName] = useState("");
     const [gender, setGenderList] = useState([]);
     const [available, setAvailable] = useState(null);
@@ -26,6 +23,15 @@ function UserList({ userlist }) {
         setDomainList([]);
         setAvailable(null);
     }
+
+    useEffect(() => {
+        fetch('/api/users')
+            .then((res) => res.json())
+            .then((data) => {
+                setUserList(data.users)
+                setUsers(data.users)
+            })
+    }, []);
 
     useEffect(() => {
         setUsers(
