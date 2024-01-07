@@ -9,7 +9,7 @@ export default function RemoveUser({ id, getud }) {
     const removeUser = async () => {
         const confirmed = confirm("Are you sure?");
         if (confirmed) {
-            const res = await fetch(`/api/users/${id}`, {
+            const res = await fetch(`/mernapp/api/users/${id}`, {
                 method: "DELETE",
             });
 

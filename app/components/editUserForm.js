@@ -20,7 +20,7 @@ export default function EditUserForm({ user }) {
         e.preventDefault();
 
         try {
-            const res = await fetch(`/api/users/${user._id}`, {
+            const res = await fetch(`/mernapp/api/users/${user._id}`, {
                 method: "PUT",
                 headers: {
                     "Content-type": "application/json",

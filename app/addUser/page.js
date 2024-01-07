@@ -24,7 +24,7 @@ export default function AddUser() {
         }
 
         try {
-            const res = await fetch('/api/users', {
+            const res = await fetch('/mernapp/api/users', {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",

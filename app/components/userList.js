@@ -27,7 +27,7 @@ export default function UserList() {
 
     useEffect(() => {
         clearState();
-        fetch('/api/users')
+        fetch('/mernapp/api/users')
             .then((res) => res.json())
             .then((data) => {
                 setUserList(data.users);
@@ -38,7 +38,7 @@ export default function UserList() {
 
     const getdata = () => {
         clearState();
-        fetch('/api/users')
+        fetch('/mernapp/api/users')
             .then((res) => res.json())
             .then((data) => {
                 setUserList(data.users);
